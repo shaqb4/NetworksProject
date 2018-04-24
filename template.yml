@@ -38,3 +38,18 @@ Resources:
           Properties:
             Path: /
             Method: post
+
+  PostMatrixMult:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.aws.codestar.projecttemplates.handler.MatrixHandler
+      Runtime: java8
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /matrixmult
+            Method: post
