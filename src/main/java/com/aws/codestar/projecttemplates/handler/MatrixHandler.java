@@ -26,7 +26,9 @@ public class MatrixHandler implements RequestHandler<Map<String, Object>, Object
         headers.put("Content-Type", "application/json");
         
         JSONObject responseBody = new JSONObject();
-        File dataFile = new File("src/main/resources/data.txt");
+        //File dataFile = new File("src/main/resources/data.txt");
+        ClassLoader classLoader = getClass().getClassLoader();
+    	File dataFile = new File(classLoader.getResource("data.txt").getFile());
         
         String method = (String) event.get("httpMethod");
         if (method.compareToIgnoreCase("POST") != 0) {
