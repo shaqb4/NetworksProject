@@ -64,6 +64,7 @@ public class MatrixHandler implements RequestHandler<Map<String, Object>, Object
         	
         	Integer[] values = br.lines()
         		.skip(params.get("startline") - 1)
+        		.map(val -> Integer.parseInt(val))
         		.toArray(Integer[]::new);
         	int row1 = params.get("row1");
         	int col1 = params.get("col1");
