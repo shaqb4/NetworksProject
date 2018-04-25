@@ -13,9 +13,9 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.aws.codestar.projecttemplates.GatewayResponse;
 
-public class MatrixHandler implements RequestHandler<Map<String, Integer>, Object> {
+public class MatrixHandler implements RequestHandler<Map<String, String>, Object> {
 	
-	public Object handleRequest(Map<String, Integer> params, final Context context) {
+	public Object handleRequest(Map<String, String> params, final Context context) {
     	Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         
