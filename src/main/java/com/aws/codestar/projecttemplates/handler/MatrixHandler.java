@@ -3,7 +3,6 @@ package com.aws.codestar.projecttemplates.handler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
@@ -14,7 +13,6 @@ import java.util.stream.Collectors;
 import org.json.JSONObject;
 
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.aws.codestar.projecttemplates.GatewayResponse;
 
@@ -44,7 +42,7 @@ public class MatrixHandler implements RequestHandler<Map<String, Object>, Object
         		);
         
         if (params.get("col1") != params.get("row2")) {
-        	responseBody.put("mess", "incompatible	matrices");
+        	responseBody.put("mess", "incompatible matrices");
         	return new GatewayResponse(responseBody.toString(), headers, 200);
         }
         
