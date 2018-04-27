@@ -36,7 +36,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         String body = (String) event.get("body");
         System.out.println(body);
         
-        /*Address addr = new Address();
+        Address addr = new Address();
         
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new Jdk8Module());
@@ -44,12 +44,13 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         try {
 			addr = mapper.readValue(body, Address.class);
 			resp = mapper.writeValueAsString(addr);
+			responseBody = new JSONObject(resp);
 		} catch (IOException e) {
 			resp = "{\"mess\": \"" + e.getMessage() + "\"}";
-		}*/
+		}
         
+        System.out.println(responseBody.toString());
         
-        
-		return new GatewayResponse(new JSONObject().put("Output", "Hello World!").toString(), headers, status);
+		return new GatewayResponse(responseBody.toString(), headers, status);
 	}
 }
