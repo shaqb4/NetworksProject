@@ -32,7 +32,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         	return new GatewayResponse(responseBody.toString(), headers, 200);
         }
         
-        String body = (String) event.get("body");
+        /*String body = (String) event.get("body");
         Address addr = new Address();
         
         ObjectMapper mapper = new ObjectMapper();
@@ -43,10 +43,10 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 			resp = mapper.writeValueAsString(addr);
 		} catch (IOException e) {
 			resp = "{\"mess\": \"" + e.getMessage() + "\"}";
-		}
+		}*/
         
         
         
-		return new GatewayResponse("{\"mess\": \"Invalid data\"}", headers, status);
+		return new GatewayResponse(new JSONObject().put("Output", "Hello World!").toString(), headers, status);
 	}
 }
