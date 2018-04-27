@@ -12,11 +12,13 @@ public class GatewayResponse {
     private final String body;
     private final Map<String, String> headers;
     private final int statusCode;
+    private final boolean isBase64Encoded;
 
     public GatewayResponse(final String body, final Map<String, String> headers, final int statusCode) {
         this.statusCode = statusCode;
         this.body = body;
         this.headers = Collections.unmodifiableMap(new HashMap<>(headers));
+        this.isBase64Encoded = false;
     }
 
     public String getBody() {
