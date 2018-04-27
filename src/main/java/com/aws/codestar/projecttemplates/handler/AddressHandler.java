@@ -42,9 +42,13 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         mapper.registerModule(new Jdk8Module());
         String resp = "{\"mess\": \"Invalid data\"}";
         try {
+        	System.out.println("before addr map");
 			addr = mapper.readValue(body, Address.class);
+			System.out.println("after addr map");
 			resp = mapper.writeValueAsString(addr);
+			System.out.println("after resp map");			
 			responseBody = new JSONObject(resp);
+			System.out.println("after responseBody map");
 		} catch (IOException e) {
 			resp = "{\"mess\": \"" + e.getMessage() + "\"}";
 		}
