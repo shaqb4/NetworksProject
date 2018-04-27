@@ -47,6 +47,6 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         
         
         
-		return new GatewayResponse(resp, headers, status);
+		return new GatewayResponse("{\"mess\": \"Invalid data\"}", headers, status);
 	}
 }
