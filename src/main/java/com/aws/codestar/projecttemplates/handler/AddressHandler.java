@@ -7,6 +7,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.aws.codestar.projecttemplates.Address;
 import com.aws.codestar.projecttemplates.GatewayResponse;
@@ -34,21 +35,25 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         
         
         String body = (String) event.get("body");
-        System.out.println(body);
+        context.getLogger().log("Body is : " + body);
         
         Address addr = new Address();
         
+        context.getLogger().log("Empty address made");
+        
         ObjectMapper mapper = new ObjectMapper();
+        context.getLogger().log("Objct mapper made");
         mapper.registerModule(new Jdk8Module());
+        context.getLogger().log("Jdk8 module registered");
         String resp = "{\"mess\": \"Invalid data\"}";
         try {
-        	System.out.println("before addr map");
+        	context.getLogger().log("before addr map");
 			addr = mapper.readValue(body, Address.class);
-			System.out.println("after addr map");
+			context.getLogger().log("after addr map");
 			resp = mapper.writeValueAsString(addr);
-			System.out.println("after resp map");			
+			context.getLogger().log("after resp map");			
 			responseBody = new JSONObject(resp);
-			System.out.println("after responseBody map");
+			context.getLogger().log("after responseBody map");
 		} catch (IOException e) {
 			resp = "{\"mess\": \"" + e.getMessage() + "\"}";
 		}
