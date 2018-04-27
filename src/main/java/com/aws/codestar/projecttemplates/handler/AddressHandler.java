@@ -32,8 +32,11 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         	return new GatewayResponse(responseBody.toString(), headers, 200);
         }
         
-        /*String body = (String) event.get("body");
-        Address addr = new Address();
+        
+        String body = (String) event.get("body");
+        System.out.println(body);
+        
+        /*Address addr = new Address();
         
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new Jdk8Module());
