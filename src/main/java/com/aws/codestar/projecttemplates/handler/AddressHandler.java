@@ -14,7 +14,6 @@ import com.aws.codestar.projecttemplates.GatewayResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 public class AddressHandler implements RequestHandler<Map<String, Object>, Object> {
 
@@ -33,32 +32,9 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         	return new GatewayResponse(responseBody.toString(), headers, 200);
         }
         
-        
         String body = (String) event.get("body");
-        context.getLogger().log("Body is : " + body);
-        
-        Address addr = new Address();
-        
-        context.getLogger().log("Empty address made");
-        
-        ObjectMapper mapper = new ObjectMapper();
-        context.getLogger().log("Objct mapper made");
-        mapper.registerModule(new Jdk8Module());
-        context.getLogger().log("Jdk8 module registered");
-        String resp = "{\"mess\": \"Invalid data\"}";
-        try {
-        	context.getLogger().log("before addr map");
-			addr = mapper.readValue(body, Address.class);
-			context.getLogger().log("after addr map");
-			resp = mapper.writeValueAsString(addr);
-			context.getLogger().log("after resp map");			
-			responseBody = new JSONObject(resp);
-			context.getLogger().log("after responseBody map");
-		} catch (IOException e) {
-			resp = "{\"mess\": \"" + e.getMessage() + "\"}";
-		}
-        
-        System.out.println(responseBody.toString());
+						
+		responseBody = new JSONObject(body);
         
 		return new GatewayResponse(responseBody.toString(), headers, status);
 	}
