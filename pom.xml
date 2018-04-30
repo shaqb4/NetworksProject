@@ -69,6 +69,28 @@
             <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+        	<groupId>org.jdbi</groupId>
+        	<artifactId>jdbi3-bom</artifactId>
+        	<version>3.1.0</version>
+        	<type>pom</type>
+        	<scope>import</scope>
+        </dependency>
+        <dependency>
+        	<groupId>org.jdbi</groupId>
+        	<artifactId>jdbi3-core</artifactId>
+        	<version>3.1.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.jdbi</groupId>
+        	<artifactId>jdbi3-postgres</artifactId>
+        	<version>3.1.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.jdbi</groupId>
+        	<artifactId>jdbi3-sqlobject</artifactId>
+        	<version>3.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
