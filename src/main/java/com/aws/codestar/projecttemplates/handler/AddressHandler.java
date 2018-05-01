@@ -31,7 +31,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         String method = (String) event.get("httpMethod");
         
         //String body = (String) event.get("body");
-        JSONObject reqBody = new JSONObject(event.get("body"));
+        JSONObject reqBody = new JSONObject((String) event.get("body"));
         switch (method.toLowerCase()) {
         case "post":
         	/*Address addr = new Address()
