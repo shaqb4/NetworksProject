@@ -26,11 +26,15 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         
         int status = 200;
         
+        System.out.println("Before env vars");
+        
         String dbName = System.getenv().get("database");
         String dbUser = System.getenv().get("user");
         String dbPwd = System.getenv().get("password");
         String dbHost = System.getenv().get("host");
         String dbPort = System.getenv().get("port");
+        
+        System.out.println("after env vars");
         
         JSONObject responseBody = new JSONObject();
         
@@ -40,10 +44,17 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         	return new GatewayResponse(responseBody.toString(), headers, status);
         }
         
+        System.out.println("After null check for env vars");
+        
         String dbUrl = this.getDBUrl(dbName, dbUser, dbPwd, dbHost, dbPort);
         
+        System.out.println("After dbURL");
+        
         Jdbi jdbi = Jdbi.create(dbUrl);
+        System.out.println("Created jdbi");
+        
 		jdbi.installPlugin(new SqlObjectPlugin());
+		System.out.println("Added SqlObject plugin");
         
         String method = (String) event.get("httpMethod");
         
@@ -51,6 +62,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         switch (method.toLowerCase()) {
         case "post":
         	try {
+        		System.out.println("Before address from body");
         		Address addr = new Address()
                 		.withStreet(reqBody.getString("street"))
                 		.withName(reqBody.getString("name"))
@@ -60,11 +72,17 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
                 		.withZip(reqBody.optString("zip"))
                 		.withCountry(reqBody.optString("country"));
         		
+        		System.out.println("After address from json");
+        		
         		Address address = jdbi.withExtension(AddressDao.class, dao -> {
         			return dao.insertAddress(addr);
         		});
+        		
+        		System.out.println("After insert");
         		JSONObject addrJson = new JSONObject(address);
+        		System.out.println("After json from address bean");
         		responseBody.put("address", addrJson);
+        		System.out.println("After response body put");
         		
         	} catch (JSONException e) {
         		responseBody.put("mess", "A name, street and user id are required to create an address");
