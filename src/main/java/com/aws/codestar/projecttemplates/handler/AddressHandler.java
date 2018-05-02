@@ -88,6 +88,8 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         		System.out.println("After response body put");
         		
         	} catch (JSONException e) {
+        		System.out.println(e.getMessage());
+        		
         		responseBody.put("mess", "A name, street and user id are required to create an address");
         	}
         	break;
