@@ -56,7 +56,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         JSONObject reqBody = null;
         try {
         	reqBody = new JSONObject((String) event.get("body"));
-        } catch(JSONException e) {
+        } catch(Exception e) {
         	
         }
         
