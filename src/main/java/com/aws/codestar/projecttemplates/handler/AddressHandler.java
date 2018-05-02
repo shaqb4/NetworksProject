@@ -50,7 +50,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 		
         String method = (String) event.get("httpMethod");
         
-        JSONObject pathParams = new JSONObject((String) event.get("pathParameters"));
+        JSONObject pathParams = new JSONObject(event.get("pathParameters"));
         
         JSONObject reqBody = new JSONObject((String) event.get("body"));
         switch (method.toLowerCase()) {
