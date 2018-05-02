@@ -1,6 +1,7 @@
 package com.aws.codestar.projecttemplates.handler;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +51,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 		
         String method = (String) event.get("httpMethod");
         
-        JSONObject pathParams = new JSONObject(event.get("pathParameters"));
+        JSONObject pathParams = new JSONObject((LinkedHashMap<String, String>) event.get("pathParameters"));
         System.out.println("path params");
         System.out.println(pathParams.toString());
         
