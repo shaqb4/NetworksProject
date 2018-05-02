@@ -74,7 +74,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
                 		.withCountry(reqBody.optString("country"));
         		
         		System.out.println("After address from json");
-        		System.out.println("addr");
+        		System.out.println(addr);
         		
         		Address address = jdbi.withExtension(AddressDao.class, dao -> {
         			System.out.println("inserting");
