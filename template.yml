@@ -66,5 +66,5 @@ Resources:
         PostEvent:
           Type: Api
           Properties:
-            Path: /address
+            Path: /user/{user_id}/address
             Method: post
