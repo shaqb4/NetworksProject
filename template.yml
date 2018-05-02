@@ -78,7 +78,7 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        PostEvent:
+        GetEvent:
           Type: Api
           Properties:
             Path: /user/{user_id}/address
