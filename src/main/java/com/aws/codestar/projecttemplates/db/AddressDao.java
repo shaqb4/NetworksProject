@@ -28,7 +28,7 @@ public interface AddressDao {
 	
 	@SqlQuery("SELECT * FROM addresses where user_id = :userId")
 	@RegisterBeanMapper(Address.class)
-	public List<Address> listAdressesByUserId(@Bind("userId") int userId);
+	public List<Address> listAdressesByUserId(@Bind("userId") long userId);
 
 	@SqlQuery("SELECT * FROM addresses where user_id = :id")
 	@RegisterBeanMapper(Address.class)

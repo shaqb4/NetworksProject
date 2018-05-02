@@ -50,6 +50,8 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 		
         String method = (String) event.get("httpMethod");
         
+        JSONObject pathParams = new JSONObject((String) event.get("pathParameters"));
+        
         JSONObject reqBody = new JSONObject((String) event.get("body"));
         switch (method.toLowerCase()) {
         case "post":
@@ -57,7 +59,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         		Address addr = new Address()
                 		.withStreet(reqBody.getString("street"))
                 		.withName(reqBody.getString("name"))
-                		.withUserId(reqBody.getLong("user_id"))
+                		.withUserId(pathParams.getLong("user_id"))
                 		.withCity(reqBody.optString("city"))
                 		.withState(reqBody.optString("state"))
                 		.withZip(reqBody.optString("zip"))
@@ -76,11 +78,11 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         	break;
         case "get":
         	try {
-        		Address address = jdbi.withExtension(AddressDao.class, dao -> {
-        			return dao.getAddressById(reqBody.getLong("id"));
+        		List<Address> addresses = jdbi.withExtension(AddressDao.class, dao -> {
+        			return dao.listAdressesByUserId(pathParams.getLong("user_id"));
         		});
         		
-        		JSONObject addrJson = new JSONObject(address);
+        		JSONObject addrJson = new JSONObject(addresses);
         		responseBody.put("address", addrJson);
         	} catch (JSONException e) {
         		System.out.println(e.getMessage());
