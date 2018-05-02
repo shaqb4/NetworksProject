@@ -53,7 +53,13 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         
         JSONObject pathParams = new JSONObject((LinkedHashMap<String, String>) event.get("pathParameters"));
         
-        JSONObject reqBody = new JSONObject((String) event.get("body"));
+        JSONObject reqBody = null;
+        try {
+        	reqBody = new JSONObject((String) event.get("body"));
+        } catch(JSONException e) {
+        	
+        }
+        
         switch (method.toLowerCase()) {
         case "post":
         	try {
@@ -72,7 +78,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 
         		JSONObject addrJson = new JSONObject(address);
         		responseBody.put("address", addrJson);		
-        	} catch (JSONException e) {
+        	} catch (Exception e) {
         		System.out.println(e.getMessage());
         		responseBody.put("mess", "A name, street and user id are required to create an address");
         	}
