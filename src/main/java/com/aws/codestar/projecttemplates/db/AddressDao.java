@@ -20,7 +20,7 @@ public interface AddressDao {
 	
 	@SqlQuery("SELECT * FROM addresses WHERE id = :id")
 	@RegisterBeanMapper(Address.class)
-	public Address getAddressById(@Bind("id") int id);
+	public Address getAddressById(@Bind("id") long l);
 	
 	@SqlQuery("SELECT * FROM addresses WHERE id = :id")
 	@RegisterBeanMapper(Address.class)
