@@ -1,5 +1,6 @@
 package com.aws.codestar.projecttemplates.handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.boot.jackson.JsonObjectDeserializer;
@@ -89,7 +91,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         			return dao.listAdressesByUserId(pathParams.getLong("user_id"));
         		});
         		
-        		JSONObject addrJson = new JSONObject(addresses);
+        		JSONArray addrJson = new JSONArray(addresses);
         		responseBody.put("address", addrJson);
         	} catch (JSONException e) {
         		System.out.println(e.getMessage());
@@ -123,37 +125,15 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 		
 		return sb.toString();
 	}
-	
-	/*public static void main(String[] args) {
-		Address addr = new Address();
-		//addr.setId(3);
-		addr.setStreet("9 Sunshine Ct.");
-		addr.setUserId(1);
-		addr.setName("Home address");
-		addr.setCity("Nashua");
-		addr.setState("New Hampshire");
-		addr.setCountry("USA");
-		addr.setZip("03063");
+	/*
+	public static void main(String[] args) {
+		List<Address> addresses = new ArrayList<>();
 		
-		Jdbi jdbi = Jdbi.create("jdbc:postgresql://networksdb.cwzebkquvxak.us-east-1.rds.amazonaws.com:3306/networks?user=shaq&password=umfinaldb12");
-		jdbi.installPlugin(new SqlObjectPlugin());
+		addresses.add(new Address().withUserId(1).withStreet("9 Sunshine Ct.").withName("Home").withId(29));
+		addresses.add(new Address().withUserId(1).withStreet("1101 Stanford Dr.").withName("School").withId(30));
 		
-//		Address address = jdbi.withExtension(AddressDao.class, dao -> {
-//			return dao.insertAddress(addr);
-//		});
+		JSONArray json = new JSONArray(addresses);
 		
-//		Address address = jdbi.withExtension(AddressDao.class, dao -> {
-//			return dao.updateAddress(addr);
-//		});
-		
-		List<Address> addresses = jdbi.withExtension(AddressDao.class, dao -> {
-			return dao.listAdressesByUser(new User().withId(1));
-		});
-		
-		//System.out.println(address);
-		
-		for (Address a : addresses) {
-			System.out.println(a);
-		}
+		System.out.println(json.toString());
 	}*/
 }
