@@ -49,6 +49,6 @@ public interface AddressDao {
 	@RegisterBeanMapper(Address.class)
 	public Address deleteAddress(@BindBean Address address);
 	
-	@SqlUpdate("SELECT EXISTS(SELECT true FROM addresses WHERE id = :id)")
+	@SqlQuery("SELECT EXISTS(SELECT true FROM addresses WHERE id = :id)")
 	public boolean addressExists(@Bind("id") long id);
 }

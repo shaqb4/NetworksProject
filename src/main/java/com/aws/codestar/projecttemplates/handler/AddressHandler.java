@@ -145,19 +145,13 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         	}
         	break;
         case "delete":
-        	try {
-        		System.out.println("Before delete");
-        		
+        	try {        		
         		boolean addressExists = jdbi.withExtension(AddressDao.class, dao -> {
         			System.out.println("Deleting");
 	    			return dao.addressExists(pathParams.getLong("id"));
 	    		});
         		
-        		System.out.println("After delete");
-        		
         		if (addressExists) {
-        			System.out.println("exists");
-        			
 		        	Address address = jdbi.withExtension(AddressDao.class, dao -> {
 		    			return dao.deleteAddressById(pathParams.getLong("id"));
 		    		});
@@ -197,15 +191,15 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 		
 		return sb.toString();
 	}
-	/*
-	public static void main(String[] args) {
-		List<Address> addresses = new ArrayList<>();
+	
+	/*public static void main(String[] args) {
+		Jdbi jdbi = Jdbi.create("jdbc:postgresql://networksdb.cwzebkquvxak.us-east-1.rds.amazonaws.com:3306/networks?user=shaq&password=umfinaldb12");
+		jdbi.installPlugin(new SqlObjectPlugin());
 		
-		addresses.add(new Address().withUserId(1).withStreet("9 Sunshine Ct.").withName("Home").withId(29));
-		addresses.add(new Address().withUserId(1).withStreet("1101 Stanford Dr.").withName("School").withId(30));
-		
-		JSONArray json = new JSONArray(addresses);
-		
-		System.out.println(json.toString());
+		boolean exists = jdbi.withExtension(AddressDao.class, dao -> {
+			return dao.addressExists(102);
+		});
+				
+		System.out.println(exists);	
 	}*/
 }
