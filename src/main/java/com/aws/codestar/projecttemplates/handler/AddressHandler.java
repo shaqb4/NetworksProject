@@ -57,7 +57,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         try {
         	reqBody = new JSONObject((String) event.get("body"));
         } catch(Exception e) {
-        	
+        	System.out.println("Could not get reqBody");
         }
         
         switch (method.toLowerCase()) {
@@ -106,8 +106,14 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 	        			return dao.getAddressById(pathParams.getLong("id"));
 	        		});
 	        		
-	        		JSONObject addrJson = new JSONObject(address);
-	        		responseBody.put("address", addrJson);
+	        		if (address != null) {
+	        			JSONObject addrJson = new JSONObject(address);
+		        		responseBody.put("address", addrJson);
+	        		} else {
+	        			status = 204;
+	        		}
+	        		
+	        		
 	        	} catch (JSONException e) {
 	        		System.out.println(e.getMessage());
 	        		status = 400;
@@ -121,23 +127,26 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         			return dao.getAddressById(pathParams.getLong("id"));
         		});
         		
-        		
-        		Address newAddr = new Address()
-        				.withId(pathParams.getLong("id"))
-        				.withUserId(exisitingAddr.getUserId()) //Can't update user id
-        				.withStreet(reqBody.optString("street", exisitingAddr.getStreet()))
-                		.withName(reqBody.optString("name", exisitingAddr.getName()))
-                		.withCity(reqBody.optString("city", exisitingAddr.getCity()))
-                		.withState(reqBody.optString("state", exisitingAddr.getState()))
-                		.withZip(reqBody.optString("zip", exisitingAddr.getZip()))
-                		.withCountry(reqBody.optString("country", exisitingAddr.getCountry()));
-        		
-        		Address address = jdbi.withExtension(AddressDao.class, dao -> {
-        			return dao.updateAddress(newAddr);
-        		});
-
-        		JSONObject addrJson = new JSONObject(address);
-        		responseBody.put("address", addrJson);
+        		if (exisitingAddr != null) {
+	        		Address newAddr = new Address()
+	        				.withId(pathParams.getLong("id"))
+	        				.withUserId(exisitingAddr.getUserId()) //Can't update user id
+	        				.withStreet(reqBody.optString("street", exisitingAddr.getStreet()))
+	                		.withName(reqBody.optString("name", exisitingAddr.getName()))
+	                		.withCity(reqBody.optString("city", exisitingAddr.getCity()))
+	                		.withState(reqBody.optString("state", exisitingAddr.getState()))
+	                		.withZip(reqBody.optString("zip", exisitingAddr.getZip()))
+	                		.withCountry(reqBody.optString("country", exisitingAddr.getCountry()));
+	        		
+	        		Address address = jdbi.withExtension(AddressDao.class, dao -> {
+	        			return dao.updateAddress(newAddr);
+	        		});
+	
+	        		JSONObject addrJson = new JSONObject(address);
+	        		responseBody.put("address", addrJson);
+        		} else {
+        			status = 204;
+        		}
         	} catch (Exception e) {
         		System.out.println(e.getMessage());
         		status = 400;
@@ -155,16 +164,10 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 		    			return dao.deleteAddressById(pathParams.getLong("id"));
 		    		});
 		        	
-		        	System.out.println("Delete: exists");
-		        	
 		        	JSONObject addrJson = new JSONObject(address);
 		    		responseBody.put("address", addrJson);
         		} else {
-        			System.out.println("Delete: doesn't exist");
         			status = 204;
-        			System.out.println("changed status");
-        			responseBody.put("mess", "That address does not exist");
-        			System.out.println("put message");
         		}
         	} catch (Exception e) {
         		System.out.println(e.getMessage());
