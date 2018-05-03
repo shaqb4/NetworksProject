@@ -162,7 +162,9 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         		} else {
         			System.out.println("Delete: doesn't exist");
         			status = 204;
+        			System.out.println("changed status");
         			responseBody.put("mess", "That address does not exist");
+        			System.out.println("put message");
         		}
         	} catch (Exception e) {
         		System.out.println(e.getMessage());
@@ -175,6 +177,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         	return new GatewayResponse(responseBody.toString(), headers, status);
         }
         
+        System.out.println(responseBody.toString());
 		return new GatewayResponse(responseBody.toString(), headers, status);
 	}
 	
