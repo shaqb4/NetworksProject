@@ -147,7 +147,6 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         case "delete":
         	try {        		
         		boolean addressExists = jdbi.withExtension(AddressDao.class, dao -> {
-        			System.out.println("Deleting");
 	    			return dao.addressExists(pathParams.getLong("id"));
 	    		});
         		
@@ -156,9 +155,12 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
 		    			return dao.deleteAddressById(pathParams.getLong("id"));
 		    		});
 		        	
+		        	System.out.println("Delete: exists");
+		        	
 		        	JSONObject addrJson = new JSONObject(address);
 		    		responseBody.put("address", addrJson);
         		} else {
+        			System.out.println("Delete: doesn't exist");
         			status = 204;
         			responseBody.put("mess", "That address does not exist");
         		}
