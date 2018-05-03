@@ -42,10 +42,13 @@ public interface AddressDao {
 	@SqlUpdate("DELETE FROM addresses WHERE id = :id")
 	@GetGeneratedKeys
 	@RegisterBeanMapper(Address.class)
-	public Address deleteAddressById(@Bind("id") int id);
+	public Address deleteAddressById(@Bind("id") long id);
 	
 	@SqlUpdate("DELETE FROM addresses WHERE id = :id")
 	@GetGeneratedKeys
 	@RegisterBeanMapper(Address.class)
 	public Address deleteAddress(@BindBean Address address);
+	
+	@SqlUpdate("SELECT EXISTS(SELECT true FROM addresses WHERE id = :id)")
+	public boolean addressExists(@Bind("id") long id);
 }

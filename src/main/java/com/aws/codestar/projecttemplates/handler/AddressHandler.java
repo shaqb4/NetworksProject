@@ -79,28 +79,96 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         		});
 
         		JSONObject addrJson = new JSONObject(address);
-        		responseBody.put("address", addrJson);		
+        		responseBody.put("address", addrJson);
+        		status = 201;
+        		headers.put("Location", (String) event.get("httpMethod") + "/" + address.getId());
         	} catch (Exception e) {
         		System.out.println(e.getMessage());
+        		status = 400;
         		responseBody.put("mess", "A name, street and user id are required to create an address");
         	}
         	break;
         case "get":
-        	try {
-        		List<Address> addresses = jdbi.withExtension(AddressDao.class, dao -> {
-        			return dao.listAdressesByUserId(pathParams.getLong("user_id"));
-        		});
-        		
-        		JSONArray addrJson = new JSONArray(addresses);
-        		responseBody.put("address", addrJson);
-        	} catch (JSONException e) {
-        		System.out.println(e.getMessage());
-        		responseBody.put("mess", "An Id is needed to retrieve an address");
+        	if (pathParams.optLong("id", -1) == -1) {
+	        	try {
+	        		List<Address> addresses = jdbi.withExtension(AddressDao.class, dao -> {
+	        			return dao.listAdressesByUserId(pathParams.getLong("user_id"));
+	        		});
+	        		
+	        		JSONArray addrJson = new JSONArray(addresses);
+	        		responseBody.put("address", addrJson);
+	        	} catch (JSONException e) {
+	        		System.out.println(e.getMessage());
+	        		status = 400;
+	        		responseBody.put("mess", "A user ID is needed to retrieve a user's addresses");
+	        	}
+        	} else {
+        		try {
+	        		Address address = jdbi.withExtension(AddressDao.class, dao -> {
+	        			return dao.getAddressById(pathParams.getLong("id"));
+	        		});
+	        		
+	        		JSONObject addrJson = new JSONObject(address);
+	        		responseBody.put("address", addrJson);
+	        	} catch (JSONException e) {
+	        		System.out.println(e.getMessage());
+	        		status = 400;
+	        		responseBody.put("mess", "An address ID is needed to retrieve a address");
+	        	}
         	}
         	break;
         case "put":
+        	try {
+        		Address exisitingAddr = jdbi.withExtension(AddressDao.class, dao -> {
+        			return dao.getAddressById(pathParams.getLong("id"));
+        		});
+        		
+        		
+        		Address newAddr = new Address()
+        				.withId(pathParams.getLong("id"))
+        				.withUserId(exisitingAddr.getUserId()) //Can't update user id
+        				.withStreet(reqBody.optString("street", exisitingAddr.getStreet()))
+                		.withName(reqBody.optString("name", exisitingAddr.getName()))
+                		.withCity(reqBody.optString("city", exisitingAddr.getCity()))
+                		.withState(reqBody.optString("state", exisitingAddr.getState()))
+                		.withZip(reqBody.optString("zip", exisitingAddr.getZip()))
+                		.withCountry(reqBody.optString("country", exisitingAddr.getCountry()));
+        		
+        		Address address = jdbi.withExtension(AddressDao.class, dao -> {
+        			return dao.updateAddress(newAddr);
+        		});
+
+        		JSONObject addrJson = new JSONObject(address);
+        		responseBody.put("address", addrJson);
+        	} catch (Exception e) {
+        		System.out.println(e.getMessage());
+        		status = 400;
+        		responseBody.put("mess", "An address ID is required to update an address");
+        	}
         	break;
         case "delete":
+        	try {
+        		
+        		boolean addressExists = jdbi.withExtension(AddressDao.class, dao -> {
+	    			return dao.addressExists(pathParams.getLong("id"));
+	    		});
+        		
+        		if (addressExists) {
+		        	Address address = jdbi.withExtension(AddressDao.class, dao -> {
+		    			return dao.deleteAddressById(pathParams.getLong("id"));
+		    		});
+		        	
+		        	JSONObject addrJson = new JSONObject(address);
+		    		responseBody.put("address", addrJson);
+        		} else {
+        			status = 204;
+        			responseBody.put("mess", "That address does not exist");
+        		}
+        	} catch (Exception e) {
+        		System.out.println(e.getMessage());
+        		status = 400;
+        		responseBody.put("mess", "An address ID is required to update an address");
+        	}
         	break;
         default:
         	responseBody.put("mess", "Bad http request: " + method);
