@@ -38,14 +38,12 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         JSONObject responseBody = new JSONObject();
         
         if (dbName == null || dbUser == null || dbPwd == null || dbHost == null || dbPort == null) {
-        	responseBody.put("mess", "Insertion failed");
+        	responseBody.put("mess", "Internal Server Error");
         	status = 500;
         	return new GatewayResponse(responseBody.toString(), headers, status);
         }
         
         String dbUrl = this.getDBUrl(dbName, dbUser, dbPwd, dbHost, dbPort);
-        
-        System.out.println(dbUrl);
         
         Jdbi jdbi = Jdbi.create(dbUrl);
         
@@ -148,12 +146,18 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         	break;
         case "delete":
         	try {
+        		System.out.println("Before delete");
         		
         		boolean addressExists = jdbi.withExtension(AddressDao.class, dao -> {
+        			System.out.println("Deleting");
 	    			return dao.addressExists(pathParams.getLong("id"));
 	    		});
         		
+        		System.out.println("After delete");
+        		
         		if (addressExists) {
+        			System.out.println("exists");
+        			
 		        	Address address = jdbi.withExtension(AddressDao.class, dao -> {
 		    			return dao.deleteAddressById(pathParams.getLong("id"));
 		    		});
