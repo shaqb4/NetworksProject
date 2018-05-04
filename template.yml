@@ -21,7 +21,7 @@ Resources:
         PostEvent:
           Type: Api
           Properties:
-            Path: /user/{user_id}/email
+            Path: /user/{user_id}/random
             Method: post
 
   GetHelloWorld:
