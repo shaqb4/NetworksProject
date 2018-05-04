@@ -18,7 +18,7 @@ import com.aws.codestar.projecttemplates.db.EmailDao;
 import com.aws.codestar.projecttemplates.db.UserDao;
 import com.aws.codestar.projecttemplates.model.Email;
 
-public class EmailHandler  implements RequestHandler<Map<String, Object>, Object> {
+public class EmailHandler implements RequestHandler<Map<String, Object>, Object> {
 	private int status;
 	private JSONObject responseBody;
 	private Map<String, String> headers;
