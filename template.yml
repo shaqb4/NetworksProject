@@ -101,10 +101,10 @@ Resources:
         GetEvent:
           Type: Api
           Properties:
-            Path: /user/{user_id}/address
+            Path: /user/{user_id}/email
             Method: get
         PostEvent:
           Type: Api
           Properties:
-            Path: /user/{user_id}/address
+            Path: /user/{user_id}/email
             Method: post
