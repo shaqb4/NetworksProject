@@ -40,11 +40,11 @@ public class Profile {
 		return this;
 	}
 	
-	public long getPhonenNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhonenNumber(long phoneNumber) {
+	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
