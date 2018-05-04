@@ -88,3 +88,23 @@ Resources:
           Properties:
             Path: /user/{user_id}/address/{id}
             Method: delete
+            
+  Email:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.aws.codestar.projecttemplates.handler.AddressHandler
+      Runtime: java8
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /user/{user_id}/address
+            Method: get
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /user/{user_id}/address
+            Method: post
