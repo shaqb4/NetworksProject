@@ -53,27 +53,27 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        GetEvent:
+        ListAddresses:
           Type: Api
           Properties:
             Path: /user/{user_id}/address
             Method: get
-        PostEvent:
+        CreateAddress:
           Type: Api
           Properties:
             Path: /user/{user_id}/address
             Method: post
-        GetEvent:
+        ReadAddress:
           Type: Api
           Properties:
             Path: /user/{user_id}/address/{id}
             Method: get
-        PutEvent:
+        UpdateAddress:
           Type: Api
           Properties:
             Path: /user/{user_id}/address/{id}
             Method: put
-        DeleteEvent:
+        DeleteAddress:
           Type: Api
           Properties:
             Path: /user/{user_id}/address/{id}
@@ -88,27 +88,27 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        GetEvent:
+        ListEmails:
           Type: Api
           Properties:
             Path: /user/{user_id}/email
             Method: get
-        PostEvent:
+        CreateEmail:
           Type: Api
           Properties:
             Path: /user/{user_id}/email
             Method: post
-        GetEvent:
+        ReadEmail:
           Type: Api
           Properties:
             Path: /user/{user_id}/email/{id}
             Method: get
-        PutEvent:
+        UpdateEmail:
           Type: Api
           Properties:
             Path: /user/{user_id}/email/{id}
             Method: put
-        DeleteEvent:
+        DeleteEmail:
           Type: Api
           Properties:
             Path: /user/{user_id}/email/{id}
