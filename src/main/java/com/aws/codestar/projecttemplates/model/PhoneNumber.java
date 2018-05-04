@@ -1,10 +1,9 @@
 package com.aws.codestar.projecttemplates.model;
 
-public class Email {
-	
+public class PhoneNumber {
 	private long id;
 	
-	private String email;
+	private String number;
 	
 	private long userId;
 	
@@ -18,21 +17,21 @@ public class Email {
 		this.id = id;
 	}
 	
-	public Email withId(long id) {
+	public PhoneNumber withId(long id) {
 		this.id = id;
 		return this;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getNumber() {
+		return number;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
-	public Email withEmail(String email) {
-		this.email = email;
+	public PhoneNumber withNumber(String number) {
+		this.number = number;
 		return this;
 	}
 
@@ -44,7 +43,7 @@ public class Email {
 		this.userId = user_id;
 	}
 	
-	public Email withUserId(long user_id) {
+	public PhoneNumber withUserId(long user_id) {
 		this.userId = user_id;
 		return this;
 	}
@@ -57,14 +56,14 @@ public class Email {
 		this.name = name;
 	}
 	
-	public Email withName(String name) {
+	public PhoneNumber withName(String name) {
 		this.name = name;
 		return this;
 	}
 	
 	public String toString() {
 		return 	"id: " + this.id + "\n" +
-				"email: " + this.email + "\n" +
+				"number: " + this.number + "\n" +
 				"user_id: " + this.userId + "\n" +
 				"name: " + this.name + "\n";
 	}
