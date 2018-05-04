@@ -129,7 +129,7 @@ public class ProfileHandler implements RequestHandler<Map<String, Object>, Objec
             		.withAddress(reqBody.optLong("address", 0))
             		.withPhoneNumber(reqBody.optLong("phone_number", 0));
     		
-    		if (profile.getEmail() > 0 || profile.getAddress() > 0 || profile.getPhonenNumber() > 0) {
+    		if (profile.getEmail() > 0 || profile.getAddress() > 0 || profile.getPhoneNumber() > 0) {
         		Profile newProfile = this.jdbi.withExtension(ProfileDao.class, dao -> 
 	    			dao.insertProfile(profile)
 	    		);
@@ -204,10 +204,10 @@ public class ProfileHandler implements RequestHandler<Map<String, Object>, Objec
         				.withUserId(exisitingProfile.getUserId()) //Can't update user id
         				.withEmail(reqBody.optLong("email", exisitingProfile.getEmail()))
         				.withAddress(reqBody.optLong("address", exisitingProfile.getAddress()))
-        				.withPhoneNumber(reqBody.optLong("phone_number", exisitingProfile.getPhonenNumber()))
+        				.withPhoneNumber(reqBody.optLong("phone_number", exisitingProfile.getPhoneNumber()))
                 		.withName(reqBody.optString("name", exisitingProfile.getName()));
                 
-        		if (newProfile.getEmail() > 0 || newProfile.getAddress() > 0 || newProfile.getPhonenNumber() > 0) {
+        		if (newProfile.getEmail() > 0 || newProfile.getAddress() > 0 || newProfile.getPhoneNumber() > 0) {
 	        		Profile profile = this.jdbi.withExtension(ProfileDao.class, dao -> 
 	        			dao.updateProfile(newProfile)
 	        		);
