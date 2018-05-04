@@ -108,3 +108,18 @@ Resources:
           Properties:
             Path: /user/{user_id}/email
             Method: post
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /user/{user_id}/email/{id}
+            Method: get
+        PutEvent:
+          Type: Api
+          Properties:
+            Path: /user/{user_id}/email/{id}
+            Method: put
+        DeleteEvent:
+          Type: Api
+          Properties:
+            Path: /user/{user_id}/email/{id}
+            Method: delete
