@@ -1,7 +1,7 @@
 package com.aws.codestar.projecttemplates.model;
 
 public class User {
-	private long id;
+	private Long id;
 	
 	private String first;
 	
@@ -14,15 +14,15 @@ public class User {
 	private String salt;
 	
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
-	public User withId(long id) {
+	public User withId(Long id) {
 		this.id = id;
 		return this;
 	}

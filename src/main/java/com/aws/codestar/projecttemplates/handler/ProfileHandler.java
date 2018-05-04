@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.startup.Tomcat.ExistingStandardWrapper;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.json.JSONArray;
@@ -120,16 +121,36 @@ public class ProfileHandler implements RequestHandler<Map<String, Object>, Objec
 		return sb.toString();
 	}
 	
+	private Profile mapToNull(Profile profile) {
+		if (profile == null) {
+			return null;
+		}
+		
+		if (profile.getAddress() < 1) {
+			profile.setAddress(null);
+		}
+		if (profile.getEmail() < 1) {
+			profile.setEmail(null);
+		}
+		if (profile.getPhoneNumber() < 1) {
+			profile.setPhoneNumber(null);
+		}
+		
+		return profile;
+	}
+	
 	private GatewayResponse handlePost(JSONObject reqBody, JSONObject pathParams) {
 		try {
-    		Profile profile = new Profile()
+    		Profile defaultProfile = new Profile()
             		.withName(reqBody.getString("name"))
             		.withUserId(pathParams.getLong("user_id"))
-            		.withEmail(reqBody.optLong("email", 0))
-            		.withAddress(reqBody.optLong("address", 0))
-            		.withPhoneNumber(reqBody.optLong("phone_number", 0));
+            		.withEmail(reqBody.optLong("email", -1))
+            		.withAddress(reqBody.optLong("address", -1))
+            		.withPhoneNumber(reqBody.optLong("phone_number", -1));
     		
-    		if (profile.getEmail() > 0 || profile.getAddress() > 0 || profile.getPhoneNumber() > 0) {
+    		Profile profile = this.mapToNull(defaultProfile);
+    		
+    		if (profile.getEmail() != null || profile.getAddress() != null || profile.getPhoneNumber() != null) {
         		Profile newProfile = this.jdbi.withExtension(ProfileDao.class, dao -> 
 	    			dao.insertProfile(profile)
 	    		);
@@ -199,7 +220,7 @@ public class ProfileHandler implements RequestHandler<Map<String, Object>, Objec
     		);
     		
     		if (exisitingProfile != null) {
-        		Profile newProfile = new Profile()
+        		Profile defaultNewProfile = new Profile()
         				.withId(pathParams.getLong("id"))
         				.withUserId(exisitingProfile.getUserId()) //Can't update user id
         				.withEmail(reqBody.optLong("email", exisitingProfile.getEmail()))
@@ -207,7 +228,9 @@ public class ProfileHandler implements RequestHandler<Map<String, Object>, Objec
         				.withPhoneNumber(reqBody.optLong("phone_number", exisitingProfile.getPhoneNumber()))
                 		.withName(reqBody.optString("name", exisitingProfile.getName()));
                 
-        		if (newProfile.getEmail() > 0 || newProfile.getAddress() > 0 || newProfile.getPhoneNumber() > 0) {
+        		Profile newProfile = this.mapToNull(defaultNewProfile);
+        		
+        		if (newProfile.getEmail() != null || newProfile.getAddress() != null || newProfile.getPhoneNumber() != null) {
 	        		Profile profile = this.jdbi.withExtension(ProfileDao.class, dao -> 
 	        			dao.updateProfile(newProfile)
 	        		);
@@ -254,5 +277,5 @@ public class ProfileHandler implements RequestHandler<Map<String, Object>, Objec
     	}
 		
 		return new GatewayResponse(this.responseBody.toString(), this.headers, this.status);
-	}	
+	}
 }

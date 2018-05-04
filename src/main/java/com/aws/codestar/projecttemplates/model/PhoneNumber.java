@@ -1,23 +1,23 @@
 package com.aws.codestar.projecttemplates.model;
 
 public class PhoneNumber {
-	private long id;
+	private Long id;
 	
 	private String number;
 	
-	private long userId;
+	private Long userId;
 	
 	private String name;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
-	public PhoneNumber withId(long id) {
+	public PhoneNumber withId(Long id) {
 		this.id = id;
 		return this;
 	}
@@ -35,15 +35,15 @@ public class PhoneNumber {
 		return this;
 	}
 
-	public long getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(long user_id) {
+	public void setUserId(Long user_id) {
 		this.userId = user_id;
 	}
 	
-	public PhoneNumber withUserId(long user_id) {
+	public PhoneNumber withUserId(Long user_id) {
 		this.userId = user_id;
 		return this;
 	}

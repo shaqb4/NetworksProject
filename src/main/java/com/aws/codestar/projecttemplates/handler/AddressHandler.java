@@ -130,10 +130,10 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
             		.withStreet(reqBody.getString("street"))
             		.withName(reqBody.getString("name"))
             		.withUserId(pathParams.getLong("user_id"))
-            		.withCity(reqBody.optString("city"))
-            		.withState(reqBody.optString("state"))
-            		.withZip(reqBody.optString("zip"))
-            		.withCountry(reqBody.optString("country"));
+            		.withCity(reqBody.optString("city", null))
+            		.withState(reqBody.optString("state", null))
+            		.withZip(reqBody.optString("zip", null))
+            		.withCountry(reqBody.optString("country", null));
     		
     		Address address = this.jdbi.withExtension(AddressDao.class, dao -> 
     			dao.insertAddress(addr)
