@@ -9,7 +9,7 @@ Parameters:
     Description: AWS CodeStar projectID used to associate new resources to team members
 
 Resources:
-  PostEmail:
+  RandomName:
     Type: AWS::Serverless::Function
     Properties:
       Handler: com.aws.codestar.projecttemplates.handler.EmailHandler
