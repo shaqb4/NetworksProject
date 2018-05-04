@@ -180,13 +180,14 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         		this.responseBody.put("address", addrJson);
     		} else {
     			this.status = 404;
+    			this.responseBody.put("mess", "Address not found");
     		}
     		
     		
     	} catch (JSONException e) {
     		System.out.println(e.getMessage());
     		this.status = 400;
-    		this.responseBody.put("mess", "An address ID is needed to retrieve a address");
+    		this.responseBody.put("mess", "An address ID is needed to retrieve an address");
     	}
 		
 		return new GatewayResponse(this.responseBody.toString(), this.headers, this.status);
@@ -217,6 +218,7 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
         		this.responseBody.put("address", addrJson);
     		} else {
     			this.status = 404;
+    			this.responseBody.put("mess", "Address not found");
     		}
     	} catch (Exception e) {
     		System.out.println(e.getMessage());
@@ -246,20 +248,9 @@ public class AddressHandler implements RequestHandler<Map<String, Object>, Objec
     	} catch (Exception e) {
     		System.out.println(e.getMessage());
     		this.status = 400;
-    		this.responseBody.put("mess", "An address ID is required to update an address");
+    		this.responseBody.put("mess", "An address ID is required to delete an address");
     	}
 		
 		return new GatewayResponse(this.responseBody.toString(), this.headers, this.status);
 	}
-	
-	/*public static void main(String[] args) {
-		Jdbi jdbi = Jdbi.create("jdbc:postgresql://networksdb.cwzebkquvxak.us-east-1.rds.amazonaws.com:3306/networks?user=shaq&password=umfinaldb12");
-		jdbi.installPlugin(new SqlObjectPlugin());
-		
-		boolean exists = jdbi.withExtension(AddressDao.class, dao -> {
-			return dao.addressExists(102);
-		});
-				
-		System.out.println(exists);	
-	}*/
 }
