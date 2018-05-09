@@ -177,7 +177,7 @@ public class ClientHandler implements RequestHandler<Map<String, Object>, Object
 			} else {
 			
 	    		Client client = new Client()
-	            		.withName(reqBody.getString("Name"))
+	            		.withName(reqBody.getString("name"))
 	            		.withToken(UUID.randomUUID().toString())
 	            		.withUserId(user.get().getId());
 	    		
