@@ -44,7 +44,7 @@ public class Client {
 		this.token = token;
 	}
 	
-	public Client withToken(String Token) {
+	public Client withToken(String token) {
 		this.token = token;
 		return this;
 	}
