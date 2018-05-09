@@ -113,7 +113,7 @@ public class UserHandler implements RequestHandler<Map<String, Object>, Object> 
             		.withFirst(reqBody.getString("first"))
             		.withLast(reqBody.getString("last"))
             		.withUsername(reqBody.getString("username"))
-            		.withPassword(BCrypt.hashpw(reqBody.getString("name"), BCrypt.gensalt()));
+            		.withPassword(BCrypt.hashpw(reqBody.getString("password"), BCrypt.gensalt()));
             		
     		
     		if (!user.getPassword().isEmpty()) {
