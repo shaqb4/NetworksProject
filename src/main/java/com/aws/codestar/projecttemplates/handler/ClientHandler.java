@@ -16,7 +16,6 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.internal.JUnitSystem;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.amazonaws.services.lambda.runtime.Context;
