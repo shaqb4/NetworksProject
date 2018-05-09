@@ -1,7 +1,5 @@
 package com.aws.codestar.projecttemplates.model;
 
-import java.util.Date;
-
 public class Permission {
 	private Long id;
 	
