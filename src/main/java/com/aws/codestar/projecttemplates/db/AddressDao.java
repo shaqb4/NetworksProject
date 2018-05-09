@@ -20,7 +20,7 @@ public interface AddressDao {
 	
 	@SqlQuery("SELECT * FROM addresses WHERE id = :id")
 	@RegisterBeanMapper(Address.class)
-	public Address getAddressById(@Bind("id") long l);
+	public Address getAddressById(@Bind("id") Long id);
 	
 	@SqlQuery("SELECT * FROM addresses WHERE id = :id")
 	@RegisterBeanMapper(Address.class)
@@ -28,7 +28,7 @@ public interface AddressDao {
 	
 	@SqlQuery("SELECT * FROM addresses where user_id = :userId")
 	@RegisterBeanMapper(Address.class)
-	public List<Address> listAdressesByUserId(@Bind("userId") long userId);
+	public List<Address> listAdressesByUserId(@Bind("userId") Long userId);
 
 	@SqlQuery("SELECT * FROM addresses where user_id = :id")
 	@RegisterBeanMapper(Address.class)
@@ -42,7 +42,7 @@ public interface AddressDao {
 	@SqlUpdate("DELETE FROM addresses WHERE id = :id")
 	@GetGeneratedKeys
 	@RegisterBeanMapper(Address.class)
-	public Address deleteAddressById(@Bind("id") long id);
+	public Address deleteAddressById(@Bind("id") Long id);
 	
 	@SqlUpdate("DELETE FROM addresses WHERE id = :id")
 	@GetGeneratedKeys
@@ -50,5 +50,5 @@ public interface AddressDao {
 	public Address deleteAddress(@BindBean Address address);
 	
 	@SqlQuery("SELECT EXISTS(SELECT true FROM addresses WHERE id = :id)")
-	public boolean addressExists(@Bind("id") long id);
+	public boolean addressExists(@Bind("id") Long id);
 }

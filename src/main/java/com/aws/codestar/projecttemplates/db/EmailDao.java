@@ -20,7 +20,7 @@ public interface EmailDao {
 	
 	@SqlQuery("SELECT * FROM emails WHERE id = :id")
 	@RegisterBeanMapper(Email.class)
-	public Email getEmailById(@Bind("id") long id);
+	public Email getEmailById(@Bind("id") Long id);
 	
 	@SqlQuery("SELECT * FROM emails WHERE id = :id")
 	@RegisterBeanMapper(Email.class)
@@ -28,7 +28,7 @@ public interface EmailDao {
 	
 	@SqlQuery("SELECT * FROM emails where user_id = :userId")
 	@RegisterBeanMapper(Email.class)
-	public List<Email> listEmailsByUserId(@Bind("userId") long userId);
+	public List<Email> listEmailsByUserId(@Bind("userId") Long userId);
 
 	@SqlQuery("SELECT * FROM emails where user_id = :id")
 	@RegisterBeanMapper(Email.class)
@@ -42,7 +42,7 @@ public interface EmailDao {
 	@SqlUpdate("DELETE FROM emails WHERE id = :id")
 	@GetGeneratedKeys
 	@RegisterBeanMapper(Email.class)
-	public Email deleteEmailById(@Bind("id") long id);
+	public Email deleteEmailById(@Bind("id") Long id);
 	
 	@SqlUpdate("DELETE FROM emails WHERE id = :id")
 	@GetGeneratedKeys
@@ -50,5 +50,5 @@ public interface EmailDao {
 	public Email deleteEmail(@BindBean Email email);
 	
 	@SqlQuery("SELECT EXISTS(SELECT true FROM emails WHERE id = :id)")
-	public boolean emailExists(@Bind("id") long id);
+	public boolean emailExists(@Bind("id") Long id);
 }

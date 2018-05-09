@@ -20,7 +20,7 @@ public interface ProfileDao {
 	
 	@SqlQuery("SELECT * FROM profiles WHERE id = :id")
 	@RegisterBeanMapper(Profile.class)
-	public Profile getProfileById(@Bind("id") long id);
+	public Profile getProfileById(@Bind("id") Long id);
 	
 	@SqlQuery("SELECT * FROM profiles WHERE id = :id")
 	@RegisterBeanMapper(Profile.class)
@@ -28,7 +28,7 @@ public interface ProfileDao {
 	
 	@SqlQuery("SELECT * FROM profiles where user_id = :userId")
 	@RegisterBeanMapper(Profile.class)
-	public List<Profile> listProfilesByUserId(@Bind("userId") long userId);
+	public List<Profile> listProfilesByUserId(@Bind("userId") Long userId);
 
 	@SqlQuery("SELECT * FROM profiles where user_id = :id")
 	@RegisterBeanMapper(Profile.class)
@@ -42,7 +42,7 @@ public interface ProfileDao {
 	@SqlUpdate("DELETE FROM profiles WHERE id = :id")
 	@GetGeneratedKeys
 	@RegisterBeanMapper(Profile.class)
-	public Profile deleteProfileById(@Bind("id") long id);
+	public Profile deleteProfileById(@Bind("id") Long id);
 	
 	@SqlUpdate("DELETE FROM profiles WHERE id = :id")
 	@GetGeneratedKeys
@@ -50,5 +50,5 @@ public interface ProfileDao {
 	public Profile deleteProfile(@BindBean Profile profile);
 	
 	@SqlQuery("SELECT EXISTS(SELECT true FROM profiles WHERE id = :id)")
-	public boolean profileExists(@Bind("id") long id);
+	public boolean profileExists(@Bind("id") Long id);
 }

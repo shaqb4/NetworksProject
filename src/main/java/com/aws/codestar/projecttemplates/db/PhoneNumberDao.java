@@ -20,7 +20,7 @@ public interface PhoneNumberDao {
 	
 	@SqlQuery("SELECT * FROM phone_numbers WHERE id = :id")
 	@RegisterBeanMapper(PhoneNumber.class)
-	public PhoneNumber getPhoneNumberById(@Bind("id") long id);
+	public PhoneNumber getPhoneNumberById(@Bind("id") Long id);
 	
 	@SqlQuery("SELECT * FROM phone_numbers WHERE id = :id")
 	@RegisterBeanMapper(PhoneNumber.class)
@@ -28,7 +28,7 @@ public interface PhoneNumberDao {
 	
 	@SqlQuery("SELECT * FROM phone_numbers where user_id = :userId")
 	@RegisterBeanMapper(PhoneNumber.class)
-	public List<PhoneNumber> listPhoneNumbersByUserId(@Bind("userId") long userId);
+	public List<PhoneNumber> listPhoneNumbersByUserId(@Bind("userId") Long userId);
 
 	@SqlQuery("SELECT * FROM phone_numbers where user_id = :id")
 	@RegisterBeanMapper(PhoneNumber.class)
@@ -42,7 +42,7 @@ public interface PhoneNumberDao {
 	@SqlUpdate("DELETE FROM phone_numbers WHERE id = :id")
 	@GetGeneratedKeys
 	@RegisterBeanMapper(PhoneNumber.class)
-	public PhoneNumber deletePhoneNumberById(@Bind("id") long id);
+	public PhoneNumber deletePhoneNumberById(@Bind("id") Long id);
 	
 	@SqlUpdate("DELETE FROM phone_numbers WHERE id = :id")
 	@GetGeneratedKeys
@@ -50,5 +50,5 @@ public interface PhoneNumberDao {
 	public PhoneNumber deletePhoneNumber(@BindBean PhoneNumber phoneNumber);
 	
 	@SqlQuery("SELECT EXISTS(SELECT true FROM phone_numbers WHERE id = :id)")
-	public boolean phoneNumberExists(@Bind("id") long id);
+	public boolean phoneNumberExists(@Bind("id") Long id);
 }
