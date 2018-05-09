@@ -16,6 +16,7 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.internal.JUnitSystem;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -228,6 +229,10 @@ public class ClientHandler implements RequestHandler<Map<String, Object>, Object
 			String[] token = this.headers.get("Authorization").trim().split(" ");
 			token = Arrays.stream(token).filter(str -> !str.isEmpty()).toArray(String[]::new);
 			
+			for (String str : token) {
+				System.out.println(str);
+			}
+			
 			Optional<Client> client = this.AuthenticateClient(token);
 			Optional<User> user = this.AuthenticateUser(reqBody.getString("username"), reqBody.getString("password"));
 			
@@ -264,9 +269,15 @@ public class ClientHandler implements RequestHandler<Map<String, Object>, Object
 				
 	    		Permission permission = this.mapToNull(defaultNewPermission);
 				
-	    		Permission newPermision = this.jdbi.withExtension(PermissionDao.class, dao -> 
-	    			dao.insertPermission(permission)
+	    		System.out.println("Mapped to null");
+	    		
+	    		Permission newPermision = this.jdbi.withExtension(PermissionDao.class, dao -> {
+	    			System.out.println("Inserting");
+	    			return dao.insertPermission(permission);
+	    		}
 	    		);
+	    		System.out.println("Inserted: " + accessToken);
+	    		
 	
 	    		this.responseBody.put("token", accessToken);
 	    		this.status = 201;
